@@ -1,4 +1,4 @@
-(define-derived-mode jsp-mode
+(define-derived-mode crappy-jsp-mode
   html-mode "JSP"
   "Major mode for jsp.
           \\{jsp-mode-map}"
@@ -30,3 +30,5 @@
       (if savep
           (save-excursion (indent-line-to indent-col))
         (indent-line-to indent-col)))))
+
+(provide 'crappy-jsp-mode)
