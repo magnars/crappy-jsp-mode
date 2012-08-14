@@ -1,5 +1,5 @@
 (define-derived-mode crappy-jsp-mode
-  html-mode "JSP"
+  html-mode "Crappy JSP"
   "Major mode for jsp.
           \\{jsp-mode-map}"
   (setq indent-line-function 'jsp-indent-line))
