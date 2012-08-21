@@ -1,8 +1,16 @@
-(define-derived-mode crappy-jsp-mode
-  html-mode "Crappy JSP"
-  "Major mode for jsp.
-          \\{jsp-mode-map}"
-  (setq indent-line-function 'jsp-indent-line))
+(defvar cjsp-el-expr-face 'cjsp-el-expr-face
+  "Face name to use for jstl el-expressions.")
+(defface cjsp-el-expr-face
+  '((((class color)) (:foreground "#FFFF00"))
+    (t (:foreground "FFFF00")))
+  "Face for jstl el-expressions.")
+
+(setq cjsp-font-lock-keywords
+      (append
+       sgml-font-lock-keywords-2
+       (list
+        (cons "\${[^}]+}" '(0 adventur-conditional-face-3 t t))
+        )))
 
 (defun cjsp--in-script-tag (lcon)
   (and (eq (car lcon) 'text)
@@ -48,5 +56,12 @@
       (if savep
           (save-excursion (indent-line-to indent-col))
         (indent-line-to indent-col)))))
+
+(define-derived-mode crappy-jsp-mode
+  html-mode "Crappy JSP"
+  "Major mode for jsp.
+          \\{jsp-mode-map}"
+  (setq indent-line-function 'jsp-indent-line)
+  (setq font-lock-defaults '((cjsp-font-lock-keywords) nil t)))
 
 (provide 'crappy-jsp-mode)
