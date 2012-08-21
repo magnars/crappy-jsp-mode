@@ -1,3 +1,5 @@
+(require 'sgml-mode)
+
 (defvar cjsp-el-expr-face 'cjsp-el-expr-face
   "Face name to use for jstl el-expressions.")
 (defface cjsp-el-expr-face
