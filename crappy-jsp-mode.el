@@ -9,7 +9,7 @@
       (append
        sgml-font-lock-keywords-2
        (list
-        (cons "\${[^}]+}" '(0 adventur-conditional-face-3 t t))
+        (cons "\${[^}]+}" '(0 cjsp-el-expr-face t t))
         )))
 
 (defun cjsp--in-script-tag (lcon)
