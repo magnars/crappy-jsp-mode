@@ -26,8 +26,9 @@
   (if (or (looking-back "<script>[\n\t ]+")
           (looking-at "</script>"))
       (sgml-calculate-indent)
-    (js--proper-indentation (save-excursion
-                              (syntax-ppss (point-at-bol))))))
+    (max (js--proper-indentation (save-excursion
+                                   (syntax-ppss (point-at-bol))))
+         (sgml-calculate-indent))))
 
 (defun cjsp--in-jsp-comment (lcon)
   (and (eq (car lcon) 'tag)
