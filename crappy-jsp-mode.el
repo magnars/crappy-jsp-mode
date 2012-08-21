@@ -5,7 +5,7 @@
     (t (:foreground "FFFF00")))
   "Face for jstl el-expressions.")
 
-(setq cjsp-font-lock-keywords
+(defvar cjsp-font-lock-keywords
       (append
        sgml-font-lock-keywords-2
        (list
