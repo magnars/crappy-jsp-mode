@@ -4,17 +4,35 @@
           \\{jsp-mode-map}"
   (setq indent-line-function 'jsp-indent-line))
 
+(defun cjsp--in-script-tag (lcon)
+  (and (eq (car lcon) 'text)
+       (cdr lcon)
+       (save-excursion
+         (goto-char (cdr lcon))
+         (looking-back "<script>"))))
+
+(defun cjsp--script-indentation ()
+  (if (or (looking-back "<script>[\n\t ]+")
+          (looking-at "</script>"))
+      (sgml-calculate-indent)
+    (js--proper-indentation (save-excursion
+                              (syntax-ppss (point-at-bol))))))
+
+(defun cjsp--in-jsp-comment (lcon)
+  (and (eq (car lcon) 'tag)
+       (looking-at "--%")
+       (save-excursion (goto-char (cdr lcon)) (looking-at "<%--"))))
+
+(defun cjsp--jsp-comment-indentation ()
+  (forward-char 4)
+  (max 0 (- (sgml-calculate-indent) 4)))
+
 (defun jsp-calculate-indent (&optional lcon)
   (unless lcon (setq lcon (sgml-lexical-context)))
-
-  ;; Indent jsp-comment-start markers <%-- like whitespace
-  (if (and (eq (car lcon) 'tag)
-           (looking-at "--%")
-           (save-excursion (goto-char (cdr lcon)) (looking-at "<%--")))
-      (progn
-        (forward-char 4)
-        (max 0 (- (sgml-calculate-indent) 4)))
-    (sgml-calculate-indent lcon)))
+  (cond
+   ((cjsp--in-script-tag lcon)  (cjsp--script-indentation))
+   ((cjsp--in-jsp-comment lcon) (cjsp--jsp-comment-indentation))
+   (t                           (sgml-calculate-indent lcon))))
 
 (defun jsp-indent-line ()
   "Indent the current line as jsp."
