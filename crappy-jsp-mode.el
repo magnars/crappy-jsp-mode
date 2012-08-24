@@ -15,15 +15,18 @@
         (cons "\${[^}]+}" '(0 cjsp-el-expr-face t t))
         )))
 
+(defvar cjsp--script-tag-re
+  "<script\\( type=\"text/javascript\"\\)?>")
+
 (defun cjsp--in-script-tag (lcon)
   (and (eq (car lcon) 'text)
        (cdr lcon)
        (save-excursion
          (goto-char (cdr lcon))
-         (looking-back "<script>"))))
+         (looking-back cjsp--script-tag-re))))
 
 (defun cjsp--script-indentation ()
-  (if (or (looking-back "<script>[\n\t ]+")
+  (if (or (looking-back (concat cjsp--script-tag-re "[\n\t ]+"))
           (looking-at "</script>"))
       (sgml-calculate-indent)
     (max (js--proper-indentation (save-excursion
