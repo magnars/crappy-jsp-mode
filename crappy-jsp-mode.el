@@ -13,6 +13,7 @@
        sgml-font-lock-keywords-2
        (list
         (cons "\${[^}]+}" '(0 cjsp-el-expr-face t t))
+        (cons "{{[^}}]+}}" '(0 cjsp-el-expr-face t t))
         )))
 
 (defvar cjsp--script-tag-re
