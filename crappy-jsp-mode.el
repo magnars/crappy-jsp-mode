@@ -65,6 +65,9 @@
           (save-excursion (indent-line-to indent-col))
         (indent-line-to indent-col)))))
 
+(eval-after-load 'expand-region
+  '(add-to-list 'expand-region-exclude-text-mode-expansions 'crappy-jsp-mode))
+
 (define-derived-mode crappy-jsp-mode
   html-mode "Crappy JSP"
   "Major mode for jsp.
