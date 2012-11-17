@@ -1,3 +1,51 @@
+;;; crappy-jsp-mode.el --- A pretty crappy major-mode for jsp.
+
+;; Copyright (C) 2011 Magnar Sveen, Jostein Holje
+
+;; Authors: Magnar Sveen <magnars@gmail.com>
+;;          Jostein Holje <jostein.holje@gmail.com>
+;; Keywords: jsp major mode
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; An exceedingly basic jsp-mode, inheriting from html-mode.
+;;
+;; This crappy mode for jsp makes sure indentation sorta works.
+;;
+;; ## Indentation
+;;
+;; It gives you proper indentation when you need to comment out
+;; whitespace with jsp-comments:
+;;
+;;     <div class="no-whitespace"><%--
+;;       --%><div class="please"><%--
+;;       --%></div><%--
+;;     --%></div><%--
+;;
+;; or maybe not even properly, just nicer than html-mode.
+;;
+;; It also indents JavaScript inside `<script>`-tags.
+;;
+;; ## Highlighting
+;;
+;; In addition to that it highlights these `${}` in a horrible yellow
+;; color.
+
+;;; Code:
+
 (require 'sgml-mode)
 (require 'js)
 
@@ -76,3 +124,5 @@
   (setq font-lock-defaults '((cjsp-font-lock-keywords) nil t)))
 
 (provide 'crappy-jsp-mode)
+
+;;; crappy-jsp-mode.el ends here
