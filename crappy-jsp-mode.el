@@ -74,6 +74,13 @@
          (goto-char (cdr lcon))
          (looking-back cjsp--script-tag-re))))
 
+(defun cjsp--in-pre-tag (lcon)
+  (and (eq (car lcon) 'text)
+       (cdr lcon)
+       (save-excursion
+         (goto-char (cdr lcon))
+         (looking-back "<pre\\( [^>]*\\)?>\\(<code\\( [^>]*\\)?>\\)?"))))
+
 (defun cjsp--script-indentation ()
   (if (or (looking-back (concat cjsp--script-tag-re "[\n\t ]+"))
           (looking-at "</script>"))
@@ -94,6 +101,7 @@
 (defun jsp-calculate-indent (&optional lcon)
   (unless lcon (setq lcon (sgml-lexical-context)))
   (cond
+   ((cjsp--in-pre-tag lcon)     nil) ; don't change indent in pre
    ((cjsp--in-script-tag lcon)  (cjsp--script-indentation))
    ((cjsp--in-jsp-comment lcon) (cjsp--jsp-comment-indentation))
    (t                           (sgml-calculate-indent lcon))))
